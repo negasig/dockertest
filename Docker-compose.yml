@@ -1,0 +1,50 @@
+
+services: 
+  frontend:
+    build: ./frontendd
+    ports:
+      - 3004:80
+    networks:
+      - mynetwork
+
+    depends_on:
+      - backend
+    
+  backend:
+    build: ./backendn
+    ports: 
+      - "8088:3008"
+    environment:
+      DB_HOST: dbn
+      DB_PORT: 3306
+      DB_USER: bankusern
+      DB_PASSWORD: bankpass
+      DB_NAME: bankdb
+    depends_on:
+      - dbn
+    networks:
+      - mynetwork
+
+ 
+  dbn:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: bankdb
+      MYSQL_USER: bankusern
+      MYSQL_PASSWORD: bankpass
+    ports:
+      - "3307:3306"
+    networks:
+      - mynetwork
+    volumes:
+      - ./Backendn/db-init:/docker-entrypoint-initdb.d 
+      - db_data:/var/lib/mysql
+
+networks:
+  mynetwork:
+volumes:
+  db_data:
+  
+ 
