@@ -45,6 +45,23 @@ app.get(`/getcustomerbyid/:id`, async (req, res) => {
 res.status(500).json({ error: err.message });
   }
 })
+app.delete("/deleteuser/:id", async (req, res) => {
+  const{id}=req.params;
+  try{
+       const [results]=await pool.query(`SELECT name,email from users where id=${id}`);
+          if(results.length===0){
+            res.json(`no user with id ${id}`);
+    }
+    else{
+          const [result]=await pool.query(`DELETE FROM users WHERE id=${id}`);
+           res.json(`user with id: ${id} has been deleted`);
+    }
+
+  }
+  catch(err){
+res.status(500).json({ error: err.message });
+  }
+})
 app.listen(3008, ()=>{
     console.log('Listening on port 3008');
 });
