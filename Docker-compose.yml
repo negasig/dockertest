@@ -1,7 +1,7 @@
 
 services: 
   frontend:
-    build: ./frontendd
+    build: ./frontend
     ports:
       - 3004:80
     networks:
@@ -30,12 +30,12 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: bankdb
       MYSQL_USER: bankusern
       MYSQL_PASSWORD: bankpass
     ports:
-      - "3307:3306"
+      - "3306:3306"
     networks:
       - mynetwork
     volumes:

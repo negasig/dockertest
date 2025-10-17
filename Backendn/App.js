@@ -26,9 +26,9 @@ res.status(500).json({ error: err.message });
   }
 })
 app.post("/createuser", async(req,res)=>{
-      const {name, email} = req.body;
+      const {firstname,lastname,salary, email} = req.body;
   try{
-const [result]=await pool.query( "INSERT INTO users (name, email) VALUES (?, ?)",[name, email]);
+const [result]=await pool.query( "INSERT INTO users (firstname, lastname, salary, email) VALUES (?, ?,?,?)",[firstname, lastname, salary, email]);
 res.json({message:"data created succesfully"});
   }
   catch(err){
@@ -38,7 +38,7 @@ res.json({err:"error while creating data"});
 app.get(`/getcustomerbyid/:id`, async (req, res) => {
   const{id}=req.params;
   try{
-    const [result]=await pool.query(`SELECT name,email from users where id=${id}`);
+    const [result]=await pool.query(`SELECT firstname, lastname, salary, email from users where id=${id}`);
     res.json({message:"Connected to db", result});
   }
   catch(err){
@@ -48,7 +48,7 @@ res.status(500).json({ error: err.message });
 app.delete("/deleteuser/:id", async (req, res) => {
   const{id}=req.params;
   try{
-       const [results]=await pool.query(`SELECT name,email from users where id=${id}`);
+       const [results]=await pool.query(`SELECT firstname, lastname, salary, email from users where id=${id}`);
           if(results.length===0){
             res.json(`no user with id ${id}`);
     }
