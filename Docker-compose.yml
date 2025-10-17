@@ -17,7 +17,7 @@ services:
     environment:
       DB_HOST: dbn
       DB_PORT: 3306
-      DB_USER: bankusern
+      DB_USER: bankuser
       DB_PASSWORD: bankpass
       DB_NAME: bankdb
     depends_on:
